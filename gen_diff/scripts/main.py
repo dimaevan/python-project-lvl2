@@ -22,25 +22,28 @@ def generate_diff(file1, file2):
 
     example_keys = set(example.keys())
     compared_keys = set(compared.keys())
-    all_keys = sorted(example_keys.union(compared_keys))
+    keys = sorted(example_keys.union(compared_keys))
 
     result = '{\n'
-    for x in all_keys:
-        if x in example_keys and x in compared_keys:
-            if example[x] == compared[x]:
-                result += beauty_result(x, example[x], ' ')
+
+    for key in keys:
+        if key in example_keys:
+            if key in compared_keys:
+                if example[key] == compared[key]:
+                    result += beauty_string(key, example[key], ' ')
+                else:
+                    result += beauty_string(key, example[key], '-')
+                    result += beauty_string(key, compared[key], '+')
             else:
-                result += beauty_result(x, example[x], '-')
-                result += beauty_result(x, example[x], '+')
-        elif x in example_keys:
-            result += beauty_result(x, example[x], '-')
-        elif x in compared_keys:
-            result += beauty_result(x, compared[x], '+')
+                result += beauty_string(key, example[key], '-')
+        else:
+            result += beauty_string(key, compared[key], '+')
+
     result += '}'
     return result
 
 
-def beauty_result(key, value, diff=" ", space='    '):
+def beauty_string(key, value, diff=" ", space='    '):
     return "{0}{1} {2}: {3} \n".format(space, diff + ' ', key, value)
 
 
