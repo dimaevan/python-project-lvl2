@@ -27,15 +27,16 @@ def generate_diff(file1, file2):
     result = '{\n'
 
     for key in keys:
-        if key in example_keys:
-            if key in compared_keys:
-                if example[key] == compared[key]:
-                    result += beauty_string(key, example[key], ' ')
-                else:
-                    result += beauty_string(key, example[key], '-')
-                    result += beauty_string(key, compared[key], '+')
+        if key in example_keys and key in compared_keys:
+            if example[key] == compared[key]:
+                result += beauty_string(key, example[key], ' ')
             else:
                 result += beauty_string(key, example[key], '-')
+                result += beauty_string(key, compared[key], '+')
+
+        elif key in example_keys:
+            result += beauty_string(key, example[key], '-')
+
         else:
             result += beauty_string(key, compared[key], '+')
 
