@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 
 
 def main():
@@ -11,9 +12,13 @@ def main():
     print(generate_diff(args.first_file, args.second_file))
 
 
-def generate_diff(example, compared):
-    example = json.load(open(example))
-    compared = json.load(open(compared))
+def generate_diff(file1, file2):
+    current_directory = os.getcwd()
+    example_path = os.path.join(current_directory, file1)
+    compared_path = os.path.join(current_directory, file2)
+
+    example = json.load(open(example_path))
+    compared = json.load(open(compared_path))
 
     example_keys = set(example.keys())
     compared_keys = set(compared.keys())
