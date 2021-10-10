@@ -44,7 +44,9 @@ def find_differences(key, dict_a, dict_b):
     if dict_a[key] == dict_b[key]:
         return beauty_string(key, dict_a[key])
     else:
-        return beauty_string(key, dict_a[key], 'remove') + beauty_string(key, dict_b[key], 'add')
+        start = beauty_string(key, dict_a[key], 'remove')
+        end = beauty_string(key, dict_b[key], 'add')
+        return start + end
 
 
 def beauty_string(key, value, method=''):
