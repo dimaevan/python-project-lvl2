@@ -5,4 +5,4 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4ca3d03d837ad4314442/test_coverage)](https://codeclimate.com/github/dimaevan/python-project-lvl2/test_coverage)
 
-Asciinema 🎞️  Gen_diff function testing [link](https://asciinema.org/a/AUEykpykLq5MEUxsEwBAu7yAo)
+Asciinema  Gen_diff function testing [🎞️](https://asciinema.org/a/AUEykpykLq5MEUxsEwBAu7yAo)

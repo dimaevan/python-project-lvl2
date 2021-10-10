@@ -12,10 +12,10 @@ def main():
     print(generate_diff(args.first_file, args.second_file))
 
 
-def generate_diff(file1, file2):
-    current_directory = os.getcwd()
-    example_path = os.path.join(current_directory, file1)
-    compared_path = os.path.join(current_directory, file2)
+def generate_diff(first_file, second_file):
+    this_directory = os.getcwd()
+    example_path = os.path.join(this_directory, first_file)
+    compared_path = os.path.join(this_directory, second_file)
 
     example = json.load(open(example_path))
     compared = json.load(open(compared_path))
@@ -28,24 +28,33 @@ def generate_diff(file1, file2):
 
     for key in keys:
         if key in example_keys and key in compared_keys:
-            if example[key] == compared[key]:
-                result += beauty_string(key, example[key], ' ')
-            else:
-                result += beauty_string(key, example[key], '-')
-                result += beauty_string(key, compared[key], '+')
+            result += find_differences(key, example, compared)
 
         elif key in example_keys:
-            result += beauty_string(key, example[key], '-')
+            result += beauty_string(key, example[key], 'remove')
 
         else:
-            result += beauty_string(key, compared[key], '+')
+            result += beauty_string(key, compared[key], 'add')
 
     result += '}'
     return result
 
 
-def beauty_string(key, value, diff=" ", space='    '):
-    return "{0}{1} {2}: {3} \n".format(space, diff + ' ', key, value)
+def find_differences(key, dict_a, dict_b):
+    if dict_a[key] == dict_b[key]:
+        return beauty_string(key, dict_a[key])
+    else:
+        return beauty_string(key, dict_a[key], 'remove') + beauty_string(key, dict_b[key], 'add')
+
+
+def beauty_string(key, value, method=''):
+    space = ' ' * 4
+    place_holder = ' ' * 2
+    if method == 'remove':
+        place_holder = '- '
+    elif method == 'add':
+        place_holder = '+ '
+    return f"{space}{place_holder}{key}: {value} \n"
 
 
 if __name__ == '__main__':

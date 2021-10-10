@@ -5,3 +5,4 @@ dist/
 *.pyc
 *.json
 file4test/
+test_test.py
