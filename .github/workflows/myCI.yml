@@ -1,0 +1,10 @@
+name : my continious integration
+
+on: push
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: mystep
+        run: echo "Hello!"
