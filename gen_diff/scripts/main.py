@@ -50,7 +50,7 @@ def check_file_type(file):
     word = str(file)
     if word.endswith('.json'):
         return 'json'
-    elif word.endswith('.yaml'):
+    elif word.endswith('.yaml') or word.endswith('*.yml'):
         return 'yaml'
     else:
         raise TypeError

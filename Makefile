@@ -10,5 +10,7 @@ build:
 	@poetry build
 test:
 	@poetry run pytest -v
-run-test:
+run-test-one:
 	@poetry run gendiff tests/fixtures/file1.json tests/fixtures/file2.json
+run-test-two:
+	@poetry run gendiff tests/fixtures/file3.json tests/fixtures/file4.json
