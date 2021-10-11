@@ -3,6 +3,4 @@ __pycache__
 __pycache__/
 dist/
 *.pyc
-*.json
-file4test/
-test_test.py
+*.cpython-39.pyc
