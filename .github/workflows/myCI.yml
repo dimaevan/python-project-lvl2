@@ -1,4 +1,4 @@
-name : my continious integration
+name : myCI
 on: push
 jobs:
   my-job:
