@@ -50,7 +50,7 @@ def check_file_type(file):
     word = str(file)
     if word.endswith('.json'):
         return 'json'
-    elif word.endswith('.yaml') or word.endswith('*.yml'):
+    elif word.endswith('.yaml') or word.endswith('.yml'):
         return 'yaml'
     else:
         raise TypeError
@@ -66,13 +66,12 @@ def find_differences(key, dict_a, dict_b):
 
 
 def beauty_string(key, value, method=''):
-    space = ' ' * 4
-    place_holder = ' ' * 2
+    place_holder = '  '
     if method == 'remove':
         place_holder = '- '
     elif method == 'add':
         place_holder = '+ '
-    return f"{space}{place_holder}{key}: {value} \n"
+    return f"'    '{place_holder}{key}: {value} \n"
 
 
 if __name__ == '__main__':
