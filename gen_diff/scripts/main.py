@@ -28,41 +28,54 @@ def main():
 
 
 def generate_diff(obj1, obj2):
-    example_keys = set(obj1.keys())
-    compared_keys = set(obj2.keys())
-    keys = sorted(example_keys.union(compared_keys))
+    return formatter(make_diff(obj1, obj2))
 
-    result = '{\n'
-    for key in keys:
-        if key in example_keys and key in compared_keys:
-            result += find_differences(key, obj1, obj2)
-        elif key in example_keys:
-            result += beauty_string(key, obj1[key], 'remove')
-        else:
-            result += beauty_string(key, obj2[key], 'add')
-    result += '}'
+
+def make_diff(el1, el2):
+    result = {}
+    if isinstance(el1, dict) and isinstance(el2, dict):
+        keys_one = set(el1.keys())
+        keys_two = set(el2.keys())
+
+        children = sorted(keys_one.union(keys_two))
+
+        for key in children:
+
+            if key in keys_one and key in keys_two:
+                if el1.get(key) == el2.get(key):
+                    result[key] = {'eqo': el1[key]}
+                else:
+                    result[key] = {'both': make_diff(el1.get(key), el2.get(key))}
+            elif key in keys_one:
+                result[key] = {'was': el1[key]}
+            else:
+                result[key] = {'add': el2[key]}
+    else:
+        return {'was': el1, 'add': el2 }
     return result
 
 
-def find_differences(key, dict_a, dict_b):
-    if dict_a[key] == dict_b[key]:
-        return beauty_string(key, dict_a[key])
-    else:
-        if isinstance(dict_a[key], dict) and isinstance(dict_b[key], dict):
-            return generate_diff(dict_a[key], dict_b[key])
+def formatter(element):
+    result = ""
+
+    if not isinstance(element, dict):
+        return element
+
+    children = element.keys()
+
+    for key in children:
+        if isinstance(element[key], dict):
+            if element[key].get('was') is not None:
+                result += f"  - {key}: {formatter(element[key]['was'])}\n"
+            if element[key].get('add') is not None:
+                result += f"  + {key}: {element[key]['add']}\n"
+            if element[key].get('eqo') is not None:
+                result += f"    {key}: {element[key]['eqo']} \n"
+            if element[key].get('both') is not None:
+                result += f"    {key}: {element[key]['both']} \n"
         else:
-            start = beauty_string(key, dict_a[key], 'remove')
-            end = beauty_string(key, dict_b[key], 'add')
-            return start + end
-
-
-def beauty_string(key, value, method=''):
-    place_holder = '  '
-    if method == 'remove':
-        place_holder = '- '
-    elif method == 'add':
-        place_holder = '+ '
-    return f"    {place_holder}{key}: {value} \n"
+            result += str(element[key])
+    return result
 
 
 if __name__ == '__main__':
