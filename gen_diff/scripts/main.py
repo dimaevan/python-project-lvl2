@@ -5,31 +5,29 @@ import yaml
 
 
 def main():
+    # Args parser
     parser = argparse.ArgumentParser(description='Generate diff')
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument("-f", '--format', help='set format of output')
     args = parser.parse_args()
-    first_file = args.first_file
-    second_file = args.second_file
-    this_directory = os.getcwd()
-    first_file_path = os.path.join(this_directory, first_file)
-    second_file_path = os.path.join(this_directory, second_file)
-    print(generate_diff(first_file_path, second_file_path))
+    # Неправильный ход мысли, исправить
+    first_file = os.path.join(os.getcwd(), args.first_file)
+    second_file = os.path.join(os.getcwd(), args.second_file)
+    # Проверка расширения файла, добавить для двух
+    extend = str(args.first_file).split('.')[-1]
 
-
-def generate_diff(first_file, second_file):
-    if check_file_type(first_file) == 'json':
+    if extend == 'json':
         example = json.load(open(first_file))
         compared = json.load(open(second_file))
     else:
         example = yaml.safe_load(open(first_file))
         compared = yaml.safe_load(open(second_file))
 
-    return parsing(example, compared)
+    print(generate_diff(example, compared))
 
 
-def parsing(obj1, obj2):
+def generate_diff(obj1, obj2):
     example_keys = set(obj1.keys())
     compared_keys = set(obj2.keys())
     keys = sorted(example_keys.union(compared_keys))
@@ -46,23 +44,16 @@ def parsing(obj1, obj2):
     return result
 
 
-def check_file_type(file):
-    word = str(file)
-    if word.endswith('.json'):
-        return 'json'
-    elif word.endswith('.yaml') or word.endswith('.yml'):
-        return 'yaml'
-    else:
-        raise TypeError
-
-
 def find_differences(key, dict_a, dict_b):
     if dict_a[key] == dict_b[key]:
         return beauty_string(key, dict_a[key])
     else:
-        start = beauty_string(key, dict_a[key], 'remove')
-        end = beauty_string(key, dict_b[key], 'add')
-        return start + end
+        if isinstance(dict_a[key], dict) and isinstance(dict_b[key], dict):
+            return generate_diff(dict_a[key], dict_b[key])
+        else:
+            start = beauty_string(key, dict_a[key], 'remove')
+            end = beauty_string(key, dict_b[key], 'add')
+            return start + end
 
 
 def beauty_string(key, value, method=''):
@@ -71,7 +62,7 @@ def beauty_string(key, value, method=''):
         place_holder = '- '
     elif method == 'add':
         place_holder = '+ '
-    return f"'    '{place_holder}{key}: {value} \n"
+    return f"    {place_holder}{key}: {value} \n"
 
 
 if __name__ == '__main__':
