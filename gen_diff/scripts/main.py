@@ -28,7 +28,9 @@ def main():
 
 
 def generate_diff(obj1, obj2):
-    return formatter(make_diff(obj1, obj2))
+    a = make_diff(obj1, obj2)
+    print(a)
+    # return formatter(a)
 
 
 def make_diff(el1, el2):
@@ -40,41 +42,41 @@ def make_diff(el1, el2):
         children = sorted(keys_one.union(keys_two))
 
         for key in children:
-
             if key in keys_one and key in keys_two:
                 if el1.get(key) == el2.get(key):
-                    result[key] = {'eqo': el1[key]}
+                    result[key] = {'status': 'eqo', 'children': el1[key]}
                 else:
-                    result[key] = {'both': make_diff(el1.get(key), el2.get(key))}
+                    result[key] = {'status': 'both', 'diff': make_diff(el1.get(key), el2.get(key))}
             elif key in keys_one:
-                result[key] = {'was': el1[key]}
+                result[key] = {'status': 'was', 'children': el1[key]}
             else:
-                result[key] = {'add': el2[key]}
+                result[key] = {'status': 'add', 'children': el2[key]}
     else:
-        return {'was': el1, 'add': el2 }
+        return {'was': el1, 'add': el2}
     return result
 
 
-def formatter(element):
-    result = ""
+def formatter(element, space='  '):
+    result = "{"
 
     if not isinstance(element, dict):
         return element
-
     children = element.keys()
 
     for key in children:
         if isinstance(element[key], dict):
             if element[key].get('was') is not None:
-                result += f"  - {key}: {formatter(element[key]['was'])}\n"
-            if element[key].get('add') is not None:
-                result += f"  + {key}: {element[key]['add']}\n"
-            if element[key].get('eqo') is not None:
-                result += f"    {key}: {element[key]['eqo']} \n"
-            if element[key].get('both') is not None:
-                result += f"    {key}: {element[key]['both']} \n"
+                add = space + '    '
+                result += f"\n{space}- {key}: {formatter(element[key]['was'], add)}"
+            elif element[key].get('add') is not None:
+                result += f"\n{space}+ {key}: {element[key]['add']}"
+            elif element[key].get('eqo') is not None:
+                result += f"\n{space}  {key}: {element[key]['eqo']}"
+            elif element[key].get('both') is not None:
+                result += f"\n{space}  {key}: {formatter(element[key]['both'])}"
         else:
-            result += str(element[key])
+            result += f"\n{space}{key}: {element[key]}"
+    result += ('\n' + space[:2] + '}')
     return result
 
 
