@@ -1,6 +1,8 @@
-import argparse
 import json
 import os
+import pprint
+
+import argparse
 import yaml
 
 
@@ -29,54 +31,64 @@ def main():
 
 def generate_diff(obj1, obj2):
     a = make_diff(obj1, obj2)
-    print(a)
-    # return formatter(a)
+    # pprint.pprint(a)
+    # print('OUT:')
+    return formatter(a)
 
 
 def make_diff(el1, el2):
     result = {}
-    if isinstance(el1, dict) and isinstance(el2, dict):
-        keys_one = set(el1.keys())
-        keys_two = set(el2.keys())
 
-        children = sorted(keys_one.union(keys_two))
+    if type(el1) is dict and type(el2) is dict:
+        keys_el1 = set(el1.keys())
+        keys_el2 = set(el2.keys())
+
+        children = sorted(keys_el1.union(keys_el2))
 
         for key in children:
-            if key in keys_one and key in keys_two:
+            if key in keys_el1 and key in keys_el2:
                 if el1.get(key) == el2.get(key):
                     result[key] = {'status': 'eqo', 'children': el1[key]}
                 else:
-                    result[key] = {'status': 'both', 'diff': make_diff(el1.get(key), el2.get(key))}
-            elif key in keys_one:
+                    rec = make_diff(el1.get(key), el2.get(key))
+                    if rec.get('diff'):
+                        result[key] = rec
+                    else:
+                        result[key] = {'status': 'both', 'children': rec}
+            elif key in keys_el1:
                 result[key] = {'status': 'was', 'children': el1[key]}
             else:
                 result[key] = {'status': 'add', 'children': el2[key]}
     else:
-        return {'was': el1, 'add': el2}
+        return {'status': 'diff', "children": {'was': el1, 'add': el2}}
     return result
 
 
-def formatter(element, space='  '):
+def formatter(element):
     result = "{"
 
-    if not isinstance(element, dict):
+    if type(element) is not dict:
         return element
+
     children = element.keys()
 
     for key in children:
-        if isinstance(element[key], dict):
-            if element[key].get('was') is not None:
-                add = space + '    '
-                result += f"\n{space}- {key}: {formatter(element[key]['was'], add)}"
-            elif element[key].get('add') is not None:
-                result += f"\n{space}+ {key}: {element[key]['add']}"
-            elif element[key].get('eqo') is not None:
-                result += f"\n{space}  {key}: {element[key]['eqo']}"
-            elif element[key].get('both') is not None:
-                result += f"\n{space}  {key}: {formatter(element[key]['both'])}"
+        el = element[key]
+        if el.get('status'):
+            if el['status'] is 'was':
+                result += f"\n- {key}: {el['children']}"
+            elif el['status'] is 'add':
+                result += f"\n+ {key}: {el['children']}"
+            elif el['status'] is 'eqo':
+                result += f"\n  {key}: {el['children']}"
+            elif el['status'] is 'both':
+                result += f"\n  {key}: {el['children']}"
+            else:
+                result += f"\n  {key}: {el['children']}"
         else:
-            result += f"\n{space}{key}: {element[key]}"
-    result += ('\n' + space[:2] + '}')
+            result = f"{el}"
+
+    result += "\n}"
     return result
 
 
