@@ -26,19 +26,18 @@ def main():
         example = yaml.safe_load(open(first_file))
         compared = yaml.safe_load(open(second_file))
 
-    print(generate_diff(example, compared))
+    generate_diff(example, compared)
 
 
 def generate_diff(obj1, obj2):
-    a = make_diff(obj1, obj2)
-    # pprint.pprint(a)
-    # print('OUT:')
-    return formatter(a)
+    this_diff = make_diff(obj1, obj2)
+    print(this_diff)
+    print(format_dict(this_diff))
 
 
 def make_diff(el1, el2):
     result = {}
-
+    # Если сравниваемые значения - словари
     if type(el1) is dict and type(el2) is dict:
         keys_el1 = set(el1.keys())
         keys_el2 = set(el2.keys())
@@ -47,49 +46,64 @@ def make_diff(el1, el2):
 
         for key in children:
             if key in keys_el1 and key in keys_el2:
+                # Ключи в обоих словарях, ключи равны
                 if el1.get(key) == el2.get(key):
-                    result[key] = {'status': 'eqo', 'children': el1[key]}
+                    result[key] = {'status': '  ', 'children': el1[key]}
                 else:
                     rec = make_diff(el1.get(key), el2.get(key))
-                    if rec.get('diff'):
-                        result[key] = rec
+                    if rec.get('was'):
+                        result[key] = {'status': 'diff', 'children': rec}
                     else:
-                        result[key] = {'status': 'both', 'children': rec}
+                        result[key] = rec
+            # Ключ только в первом словаре - удален
             elif key in keys_el1:
-                result[key] = {'status': 'was', 'children': el1[key]}
+                result[key] = {'status': '- ', 'children': el1[key]}
+            # Ключ только во втором словаре - добавлен
             else:
-                result[key] = {'status': 'add', 'children': el2[key]}
+                result[key] = {'status': '+ ', 'children': el2[key]}
+    # Если сравниваемые значения - разные типы
     else:
-        return {'status': 'diff', "children": {'was': el1, 'add': el2}}
+        return {'was': el1, 'add': el2}
     return result
 
 
-def formatter(element):
-    result = "{"
+def format_dict(struct):
+    result = ""
+    left_space = '    '
 
-    if type(element) is not dict:
-        return element
+    def sub_format(element, spacing, size):
+        if type(element) is not dict:
+            return element
+        space = spacing * size
+        size += 1
+        line = "{"
+        keys = element.keys()
 
-    children = element.keys()
-
-    for key in children:
-        el = element[key]
-        if el.get('status'):
-            if el['status'] is 'was':
-                result += f"\n- {key}: {el['children']}"
-            elif el['status'] is 'add':
-                result += f"\n+ {key}: {el['children']}"
-            elif el['status'] is 'eqo':
-                result += f"\n  {key}: {el['children']}"
-            elif el['status'] is 'both':
-                result += f"\n  {key}: {el['children']}"
+        for key in keys:
+            el = element[key]
+            # Проверяем обьект или обычный словарь
+            if is_get_stat(el):
+                prefix = el['status']
+                if prefix == 'diff':
+                    line += f"\n{space[:-2]}- {key}: {sub_format(el['children']['was'], left_space, size)}"
+                    line += f"\n{space[:-2]}+ {key}: {sub_format(el['children']['add'], left_space, size)}"
+                # Если обьект без диффа
+                else:
+                    line += f"\n{space[:-2]}{prefix}{key}: {sub_format(el['children'], left_space, size)}"
             else:
-                result += f"\n  {key}: {el['children']}"
-        else:
-            result = f"{el}"
+                line += f"\n{space[:-2]}{key}: {sub_format(el, left_space, size)} "
 
-    result += "\n}"
+        line += "\n" + space[:-4] + "}"
+        return line
+
+    result += sub_format(struct, left_space, 1)
     return result
+
+
+def is_get_stat(el):
+    if type(el) is dict:
+        if el.get('status') is not None:
+            return True
 
 
 if __name__ == '__main__':

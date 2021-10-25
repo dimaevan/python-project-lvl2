@@ -1,4 +1,4 @@
-from gen_diff.scripts.main import generate_diff, check_file_type
+from gen_diff.scripts.main import generate_diff
 
 
 def testing_json():
@@ -13,11 +13,4 @@ def testing_yaml():
     with open('tests/fixtures/output.txt', 'r') as output:
         x = output.read()
     assert out == x
-
-
-def test_check_test_file():
-    for x in ['*.json', '1.json', '_.json']:
-        assert 'json' == check_file_type(x)
-    for x in ['*.yaml', '1.yaml', '_.yaml']:
-        assert 'yaml' == check_file_type(x)
 
