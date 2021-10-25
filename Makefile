@@ -9,7 +9,7 @@ lint:
 build:
 	@poetry build
 test:
-	@poetry run pytest -v
+	@poetry run pytest -vv
 run1:
 	@poetry run gendiff tests/fixtures/file1.json tests/fixtures/file2.json
 run2:
