@@ -1,7 +1,5 @@
 import json
 import os
-import pprint
-
 import argparse
 import yaml
 
@@ -26,13 +24,12 @@ def main():
         example = yaml.safe_load(open(first_file))
         compared = yaml.safe_load(open(second_file))
 
-    generate_diff(example, compared)
+    print(generate_diff(example, compared))
 
 
 def generate_diff(obj1, obj2):
     this_diff = make_diff(obj1, obj2)
-    print(this_diff)
-    print(format_dict(this_diff))
+    return format_dict(this_diff)
 
 
 def make_diff(el1, el2):
@@ -51,10 +48,10 @@ def make_diff(el1, el2):
                     result[key] = {'status': '  ', 'children': el1[key]}
                 else:
                     rec = make_diff(el1.get(key), el2.get(key))
-                    if rec.get('was'):
+                    if rec.get('was') is not None:
                         result[key] = {'status': 'diff', 'children': rec}
                     else:
-                        result[key] = rec
+                        result[key] = {'status': '  ', 'children': rec}
             # Ключ только в первом словаре - удален
             elif key in keys_el1:
                 result[key] = {'status': '- ', 'children': el1[key]}
