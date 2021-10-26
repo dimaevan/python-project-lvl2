@@ -3,6 +3,7 @@ result = ''
 
 def plain(element, parent=''):
     global result
+
     if type(element) is not dict:
         return
 
@@ -24,9 +25,9 @@ def plain(element, parent=''):
             add = check_type(el['children']['add'])
             result += f"Property '{pr}{_}' was updated. From {was} to {add}\n"
         else:
-            plain(el['children'], parent=pr+_)
+            plain(el['children'], parent=pr + _)
 
-    return result
+    return result.rstrip()
 
 
 def is_get_stat(el):
@@ -42,7 +43,3 @@ def check_type(el):
         return "[complex value]"
     else:
         return str("'" + str(el) + "'")
-
-
-if __name__ == "__main__":
-    pass

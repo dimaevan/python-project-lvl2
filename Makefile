@@ -20,3 +20,5 @@ run4:
 	poetry run gendiff --format plain tests/fixtures/file1.json tests/fixtures/file2.json
 run5:
 	poetry run gendiff --format plain tests/fixtures/file3.json tests/fixtures/file4.json
+run6:
+	poetry run gendiff --format json tests/fixtures/file3.json tests/fixtures/file4.json

@@ -5,6 +5,7 @@ import yaml
 from .parser.parsing import parser_dict
 from .formatter.stylish_format import stylish
 from .formatter.plain_format import plain
+from .formatter.json_format import fjson
 
 
 class MyError(Exception):
@@ -27,6 +28,8 @@ def main():
     # Выбор форматирования
     if args.format == 'plain':
         print(generate_diff(first_file, second_file, 'plain'))
+    elif args.format == 'json':
+        print(generate_diff(first_file, second_file, 'json'))
     else:
         print(generate_diff(first_file, second_file))
 
@@ -58,6 +61,8 @@ def generate_diff(obj1, obj2, type_format='stylish'):
     # print(this_diff)
     if type_format == "plain":
         return plain(this_diff)
+    elif type_format == "json":
+        return fjson(this_diff)
     else:
         return stylish(this_diff)
 
