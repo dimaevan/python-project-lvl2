@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
-version = "0.1.0"
-description = ""
+version = "0.2.0"
+description = "Find differences from 2  json or yaml files. "
 authors = ["dimaevan <dimaevan@gmail.com>"]
 packages = [
     { include='gen_diff' },

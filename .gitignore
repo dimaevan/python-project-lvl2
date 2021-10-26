@@ -6,3 +6,4 @@ dist/
 *.cpython-39.pyc
 .pytest_cache
 temp.py
+*.backup

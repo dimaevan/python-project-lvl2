@@ -24,7 +24,7 @@ def stylish(struct):
                     line += f"\n{space[:-2]}{prefix}{key}:" \
                             f" {inner(el['children'], size)}"
             else:
-                line += f"\n{space[:-2]}{key}: {inner(el, size)} "
+                line += f"\n{space}{key}: {inner(el, size)}"
 
         line += "\n" + space[:-4] + "}"
         return line

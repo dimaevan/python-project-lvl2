@@ -2,8 +2,9 @@ import json
 import os
 import argparse
 import yaml
+from .parser.parsing import parser_dict
 from .formatter.stylish_format import stylish
-# from .formatter.plain_format import plain
+from .formatter.plain_format import plain
 
 
 class MyError(Exception):
@@ -14,77 +15,51 @@ class MyError(Exception):
 def main():
     # Args parser
     parser = argparse.ArgumentParser(description='Generate diff')
+    # Обязательные параметры
     parser.add_argument('first_file')
     parser.add_argument('second_file')
+    # Необязательные пармаетры( Есть "--")
     parser.add_argument("-f", '--format', help='set format of output')
     args = parser.parse_args()
-    # Неправильный ход мысли, исправить
+    # Получаем рабочую директорию и отсительное расположение файлов
     first_file = os.path.join(os.getcwd(), args.first_file)
     second_file = os.path.join(os.getcwd(), args.second_file)
-
-    print(generate_diff(first_file, second_file))
+    # Выбор форматирования
+    if args.format == 'plain':
+        print(generate_diff(first_file, second_file, 'plain'))
+    else:
+        print(generate_diff(first_file, second_file))
 
 
 def open_files(first, second):
+    # Получаем расширения обоих фалов
     first_extend = str(first).split('.')[-1]
     second_extend = str(second).split('.')[-1]
-
+    # Проверка,что файлы с одинаковым расширением
     if first_extend != second_extend:
         raise MyError("Wrong type of files")
 
     if first_extend == 'json':
         example = json.load(open(first))
         compared = json.load(open(second))
-    else:
+    elif first_extend in ("yaml", "yml"):
         example = yaml.safe_load(open(first))
         compared = yaml.safe_load(open(second))
+    else:
+        raise MyError("Wrong type of files")
 
     return example, compared
 
 
-def generate_diff(obj1, obj2):
+def generate_diff(obj1, obj2, type_format='stylish'):
     first_dict, second_dict = open_files(obj1, obj2)
-    this_diff = make_diff(first_dict, second_dict)
-    return stylish(this_diff)
-
-
-def make_diff(el1, el2):
-    result = {}
-    # Если сравниваемые значения - словари
-    if type(el1) is dict and type(el2) is dict:
-
-        keys_el1 = set(el1.keys())
-        keys_el2 = set(el2.keys())
-
-        children = sorted(keys_el1.union(keys_el2))
-
-        for key in children:
-
-            if key in keys_el1 and key in keys_el2:
-                # Ключи в обоих словарях, ключи равны
-                if el1.get(key) == el2.get(key):
-                    result[key] = {'status': '  ', 'children': el1[key]}
-                else:
-                    recurs = make_diff(el1.get(key), el2.get(key))
-                    result[key] = check_children(recurs)
-            # Ключ только в первом словаре - удален
-            elif key in keys_el1:
-                result[key] = {'status': '- ', 'children': el1[key]}
-            # Ключ только во втором словаре - добавлен
-            else:
-                result[key] = {'status': '+ ', 'children': el2[key]}
-    # Если сравниваемые значения - разные типы
+    this_diff = parser_dict(first_dict, second_dict)
+    # 4 develop only
+    # print(this_diff)
+    if type_format == "plain":
+        return plain(this_diff)
     else:
-        return {'was': el1, 'add': el2}
-
-    return result
-
-
-def check_children(some_dict):
-    if some_dict.get('was') is not None:
-        return {'status': 'diff', 'children': some_dict}
-    else:
-        return {'status': '  ', 'children': some_dict}
+        return stylish(this_diff)
 
 
 if __name__ == '__main__':
