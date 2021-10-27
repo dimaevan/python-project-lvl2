@@ -5,7 +5,7 @@ run-help:
 install:
 	@poetry install
 lint:
-	@poetry run flake8 gen_diff
+	@poetry run flake8 gendiff
 build:
 	@poetry build
 test:
