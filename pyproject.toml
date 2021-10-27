@@ -8,7 +8,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-gendiff = "gen_diff.scripts.main:main"
+gendiff = "gen_diff.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"

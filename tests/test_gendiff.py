@@ -1,31 +1,41 @@
-from gen_diff.scripts.main import generate_diff
+from gen_diff.main import generate_diff, open_file
 from .fixtures.fixtures import *
-from gen_diff.scripts.utils.functions import is_dict, is_have_stat, return_status
+from gen_diff.utils.functions import is_dict, is_have_stat, return_status
 
 
 def testing_json():
-    out = generate_diff('tests/fixtures/file1.json', 'tests/fixtures/file2.json')
+    file1 = open_file('tests/fixtures/file1.json')
+    file2 = open_file('tests/fixtures/file2.json')
+    out = generate_diff(file1, file2)
     assert out == simple_dict
 
 
 def testing_yaml():
-    out = generate_diff('tests/fixtures/file1.yaml', 'tests/fixtures/file2.yaml')
+    file1 = open_file('tests/fixtures/file1.yaml')
+    file2 = open_file('tests/fixtures/file2.yaml')
+    out = generate_diff(file1, file2)
     assert out == simple_dict
 
 
 def test_recursive_dict_json():
-    out = generate_diff('tests/fixtures/file3.json', 'tests/fixtures/file4.json')
+    file1 = open_file('tests/fixtures/file3.json')
+    file2 = open_file('tests/fixtures/file4.json')
+    out = generate_diff(file1, file2)
     assert out == big_dict
 
 
 def test_recursive_dict_yaml():
-    out = generate_diff('tests/fixtures/file3.yaml', 'tests/fixtures/file4.yaml')
+    file1 = open_file('tests/fixtures/file3.yaml')
+    file2 = open_file('tests/fixtures/file4.yaml')
+    out = generate_diff(file1, file2)
     assert out == big_dict
 
 
 def test_plain():
     """ Test big data dict with plain formatter """
-    out = generate_diff('tests/fixtures/file3.json', 'tests/fixtures/file4.json', "plain")
+    file1 = open_file('tests/fixtures/file3.json')
+    file2 = open_file('tests/fixtures/file4.json')
+    out = generate_diff(file1, file2, 'plain')
     assert out == plain_format
 
 

@@ -43,7 +43,7 @@ def open_file(file):
     if ext == 'json':
         return json.load(open(file))
     elif ext in ("yaml", "yml"):
-        return yaml.load(open(file))
+        return yaml.safe_load(open(file))
     raise MyError("Wrong type of files")
 
 
