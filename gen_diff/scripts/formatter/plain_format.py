@@ -1,45 +1,42 @@
+from ..utils.functions import return_status, check_type, is_dict
+
 result = ''
+STATUSES = ('- ', '+ ', 'diff')
 
 
 def plain(element, parent=''):
     global result
 
-    if type(element) is not dict:
+    if not is_dict(element):
         return
 
     pr = ''
     if parent:
         pr = parent + '.'
 
-    child = element.keys()
+    for key in element.keys():
+        el = element[key]
 
-    for _ in child:
-        el = element[_]
-        if is_get_stat(el) == '- ':
-            result += f"Property '{pr}{_}' was removed\n"
-        elif is_get_stat(el) == '+ ':
-            value = check_type(el['children'])
-            result += f"Property '{pr}{_}' was added with value: {value}\n"
-        elif is_get_stat(el) == 'diff':
-            was = check_type(el['children']['was'])
-            add = check_type(el['children']['add'])
-            result += f"Property '{pr}{_}' was updated. From {was} to {add}\n"
+        status = return_status(el)
+        first_string = f"Property '{pr}{key}' was "
+
+        if status in STATUSES:
+            result += first_string + answer(status, el)
+
         else:
-            plain(el['children'], parent=pr + _)
+            plain(el['children'], parent=pr + key)
 
     return result.rstrip()
 
 
-def is_get_stat(el):
-    """ Return status of dict-object """
-    if type(el) is dict:
-        if el.get('status') is not None:
-            return el['status']
-
-
-def check_type(el):
-    """ Function for better formatting """
-    if type(el) is dict:
-        return "[complex value]"
-    else:
-        return str("'" + str(el) + "'")
+def answer(status, el):
+    if status == '- ':
+        return "removed\n"
+    elif status == '+ ':
+        value = check_type(el['children'])
+        return f"added with value: {value}\n"
+    elif status == 'diff':
+        was = check_type(el['children']['was'])
+        add = check_type(el['children']['add'])
+        return f"updated. From {was} to {add}\n"
+    return ''

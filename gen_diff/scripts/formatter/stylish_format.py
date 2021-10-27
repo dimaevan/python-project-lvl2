@@ -4,6 +4,7 @@ def stylish(struct):
     def inner(element, size, spacing='    '):
         if type(element) is not dict:
             return element
+
         space = spacing * size
         size += 1
         line = "{"
