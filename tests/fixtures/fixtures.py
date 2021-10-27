@@ -1,19 +1,19 @@
 simple_dict = """{
-  - follow: False
+  - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
   - timeout: 50
   + timeout: 20
-  + verbose: True
+  + verbose: true
 }"""
 
 big_dict = """{
     common: {
-      + follow: False
+      + follow: false
         setting1: Value 1
       - setting2: 200
-      - setting3: True
-      + setting3: None
+      - setting3: true
+      + setting3: null
       + setting4: blah blah
       + setting5: {
             key5: value5
@@ -60,9 +60,9 @@ json4 = "{'common': {'follow': False, 'setting1': 'Value 1', 'setting3': None, '
         "'key5': 'value5'}, 'setting6': {'key': 'value', 'ops': 'vops', 'doge': {'wow': 'so much'}}}, 'group1': {" \
         "'foo': 'bar', 'baz': 'bars', 'nest': 'str'}, 'group3': {'deep': {'id': {'number': 45}}, 'fee': 100500}} "
 
-plain_format = """Property 'common.follow' was added with value: 'False'
+plain_format = """Property 'common.follow' was added with value: 'false'
 Property 'common.setting2' was removed
-Property 'common.setting3' was updated. From 'True' to 'None'
+Property 'common.setting3' was updated. From 'true' to 'null'
 Property 'common.setting4' was added with value: 'blah blah'
 Property 'common.setting5' was added with value: [complex value]
 Property 'common.setting6.doge.wow' was updated. From '' to 'so much'

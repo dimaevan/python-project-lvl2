@@ -13,19 +13,20 @@ def parser_dict(el1, el2):
             if key in keys_el1 and key in keys_el2:
                 # Ключи в обоих словарях, ключи равны
                 if el1.get(key) == el2.get(key):
-                    result[key] = {'status': '  ', 'children': el1[key]}
+                    value = convert(el1[key])
+                    result[key] = {'status': '  ', 'children': value}
                 else:
-                    recurs = parser_dict(el1.get(key), el2.get(key))
+                    recurs = parser_dict(convert(el1[key]), convert(el2[key]))
                     result[key] = check_children(recurs)
             # Ключ только в первом словаре - удален
             elif key in keys_el1:
-                result[key] = {'status': '- ', 'children': el1[key]}
+                result[key] = {'status': '- ', 'children': convert(el1[key])}
             # Ключ только во втором словаре - добавлен
             else:
-                result[key] = {'status': '+ ', 'children': el2[key]}
+                result[key] = {'status': '+ ', 'children': convert(el2[key])}
     # Если сравниваемые значения - разные типы
     else:
-        return {'was': el1, 'add': el2}
+        return {'was': convert(el1), 'add': convert(el2)}
 
     return result
 
@@ -33,10 +34,24 @@ def parser_dict(el1, el2):
 def check_children(some_dict):
     if some_dict.get('was') is not None:
         return {'status': 'diff', 'children': some_dict}
-    else:
-        return {'status': '  ', 'children': some_dict}
+    return {'status': '  ', 'children': some_dict}
+
+
+def convert(obj):
+    dictionary = {
+        'False': 'false',
+        'True': 'true',
+        'None': 'null',
+    }
+    return dictionary.get(str(obj), obj)
 
 
 if __name__ == "__main__":
-    from tests.fixtures.fixtures import json3, json4
-    print(parser_dict(json3, json4))
+    pass
+    # from gen_diff.scripts.main import open_files
+
+    # file1, file2 = \
+    #     open_files(
+    #         "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file3.json",
+    #         "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file4.json")
+    # print(parser_dict(file1, file2))

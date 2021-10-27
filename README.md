@@ -7,5 +7,6 @@
 > Asciinema.
 > 1. [🎞️Main function testing](https://asciinema.org/a/AUEykpykLq5MEUxsEwBAu7yAo)
 > 2. [🎞️Add yaml-features](https://asciinema.org/a/bCMj4T9gecqDlbY7j6ZWO3tyD)
-> 3. [🎞️Proccesing complicated objects](https://asciinema.org/a/gO3GbvbdyoytaysmnKjabIKMI)
+> 3. [🎞️Process complicated objects](https://asciinema.org/a/gO3GbvbdyoytaysmnKjabIKMI)
 > 4. [🎞️Plain formatter](https://asciinema.org/a/uEiXyl1Scx7Hbj6HkwlOhrlKF)
+> 4. [🎞️Json formatter](https://asciinema.org/a/FSqlvupqMziTYi79RZQczeh4e)
