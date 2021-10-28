@@ -4,10 +4,10 @@ import json
 import os
 import argparse
 import yaml
-from .parser.parsing import parser_dict
-from .formatter.stylish_format import stylish
-from .formatter.plain_format import plain
-from .formatter.json_format import fjson
+from gen_diff.parser.parsing import parser_dict
+from gen_diff.formatter.stylish_format import stylish
+from gen_diff.formatter.plain_format import plain
+from gen_diff.formatter.json_format import fjson
 from gen_diff.utils.functions import walker
 
 

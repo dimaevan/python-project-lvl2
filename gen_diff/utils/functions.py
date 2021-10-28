@@ -2,7 +2,6 @@ def is_dict(obj):
     """ Return True if type(atr) is dictionary """
     if type(obj) is dict:
         return True
-    return False
 
 
 def is_have_stat(obj):
@@ -23,6 +22,14 @@ def check_type(obj):
     """ Function for better formatting """
     if is_dict(obj):
         return "[complex value]"
+    elif obj == "false":
+        return "false"
+    elif obj == "true":
+        return "true"
+    elif obj == "null":
+        return "null"
+    elif type(obj) is int:
+        return obj
     return str("'" + str(obj) + "'")
 
 

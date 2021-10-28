@@ -1,5 +1,8 @@
+from gen_diff.utils.functions import is_have_stat
+
+
 def stylish(struct):
-    result = "\n"
+    result = ""
 
     def inner(element, size, spacing='    '):
         if type(element) is not dict:
@@ -13,7 +16,7 @@ def stylish(struct):
         for key in keys:
             el = element[key]
             # Проверяем обьект или обычный словарь
-            if is_get_stat(el):
+            if is_have_stat(el):
                 prefix = el['status']
                 if prefix == 'diff':
                     line += f"\n{space[:-2]}- {key}:" \
@@ -32,9 +35,3 @@ def stylish(struct):
 
     result += inner(struct, 1)
     return result
-
-
-def is_get_stat(el):
-    if type(el) is dict:
-        if el.get('status') is not None:
-            return True
