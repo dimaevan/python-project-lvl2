@@ -42,7 +42,6 @@ def convert(obj):
         'False': 'false',
         'True': 'true',
         'None': 'null',
-        '': ''
     }
     return dictionary.get(str(obj), obj)
 
@@ -51,8 +50,11 @@ if __name__ == "__main__":
     pass
     # from pprint import pprint
     # from gen_diff.main import open_file
+    # from gen_diff.formatter.plain_format import plain
     # file1 = open_file(
-    #           "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file10.yml")
+    #           "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file10.json")
     # file2 = open_file(
-    #          "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file11.yml")
-    # pprint(parser_dict(file1, file2))
+    #          "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file11.json")
+    # answer = parser_dict(file1, file2)
+    # pprint(answer)
+    # print(plain(answer))

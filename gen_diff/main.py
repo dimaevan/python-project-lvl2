@@ -47,7 +47,7 @@ def open_file(file):
         return walker(json.load(open(file)))
     elif ext in ("yaml", "yml"):
         return walker(yaml.safe_load(open(file)))
-    raise MyError("Wrong type of files")
+    raise MyError("Wrong type of file")
 
 
 def generate_diff(obj1, obj2, type_format='stylish'):

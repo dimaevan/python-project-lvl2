@@ -11,7 +11,7 @@ lint:
 build:
 	@poetry build
 test:
-	@poetry run pytest -v
+	@poetry run pytest -vv
 check:
 	make lint & make test
 run1:
@@ -37,4 +37,8 @@ run3.1:
 run4.1:
 	@poetry run gendiff tests/fixtures/hexlet_fixtures/file10.yml tests/fixtures/hexlet_fixtures/file11.yml
 run4.2:
-	@poetry run gendiff --format plain tests/fixtures/hexlet_fixtures/file10.yml tests/fixtures/hexlet_fixtures/file11.yml
+	@poetry run gendiff --format plain tests/hexlet_fixtures/file10.yml tests/hexlet_fixtures/file11.yml
+run5.1:
+	@poetry run gendiff tests/hexlet_fixtures/file10.json tests/hexlet_fixtures/file11.json
+run5.2:
+	@poetry run gendiff --format plain tests/hexlet_fixtures/file10.json tests/hexlet_fixtures/file11.json

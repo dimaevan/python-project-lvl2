@@ -29,10 +29,3 @@ def test_recursive_dict_yaml():
     out = generate_diff(file1, file2)
     assert out == big_dict
 
-
-def test_plain():
-    """ Test big data dict with plain formatter """
-    file1 = open_file('tests/fixtures/file3.json')
-    file2 = open_file('tests/fixtures/file4.json')
-    out = generate_diff(file1, file2, 'plain')
-    assert out == plain_format
