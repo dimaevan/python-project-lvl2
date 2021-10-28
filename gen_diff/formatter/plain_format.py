@@ -1,6 +1,6 @@
 from ..utils.functions import return_status, check_type, is_dict
 
-result = ''
+result = '\n'
 STATUSES = ('- ', '+ ', 'diff')
 
 

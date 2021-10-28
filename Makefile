@@ -24,3 +24,9 @@ run5:
 	@poetry run gendiff --format plain tests/fixtures/file3.json tests/fixtures/file4.json
 run6:
 	@poetry run gendiff --format json tests/fixtures/file3.json tests/fixtures/file4.json
+run2.1:
+	@poetry run gendiff tests/fixtures/file1.yaml tests/fixtures/file2.yaml
+run2.2:
+	@poetry run gendiff tests/fixtures/file3.yaml tests/fixtures/file4.yaml
+run2.3:
+	@poetry run gendiff  --format plain tests/fixtures/file3.yaml tests/fixtures/file4.yaml

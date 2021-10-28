@@ -1,5 +1,5 @@
 def stylish(struct):
-    result = ""
+    result = "\n"
 
     def inner(element, size, spacing='    '):
         if type(element) is not dict:
