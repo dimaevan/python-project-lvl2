@@ -42,16 +42,16 @@ def convert(obj):
         'False': 'false',
         'True': 'true',
         'None': 'null',
+        '': ''
     }
     return dictionary.get(str(obj), obj)
 
 
 if __name__ == "__main__":
     pass
-    # from gen_diff.scripts.main import open_files
-
-    # file1, file2 = \
-    #     open_files(
-    #         "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file3.json",
-    #         "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file4.json")
+    # from gen_diff.main import open_file
+    # file1 = open_file(
+    #          "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file3.json")
+    # file2 = open_file(
+    #          "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/file7.json")
     # print(parser_dict(file1, file2))

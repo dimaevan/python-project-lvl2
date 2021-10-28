@@ -30,3 +30,5 @@ run2.2:
 	@poetry run gendiff tests/fixtures/file3.yaml tests/fixtures/file4.yaml
 run2.3:
 	@poetry run gendiff  --format plain tests/fixtures/file3.yaml tests/fixtures/file4.yaml
+run3.1:
+	@poetry run gendiff tests/fixtures/file3.json tests/fixtures/file7.json

@@ -24,3 +24,22 @@ def check_type(obj):
     if is_dict(obj):
         return "[complex value]"
     return str("'" + str(obj) + "'")
+
+
+def walker(el):
+    result = {}
+    if type(el) != dict:
+        return convert(el)
+    for key in el.keys():
+        result[key] = walker(el[key])
+    return result
+
+
+def convert(obj):
+    dictionary = {
+        'False': 'false',
+        'True': 'true',
+        'None': 'null',
+        '': ''
+    }
+    return dictionary.get(str(obj), obj)

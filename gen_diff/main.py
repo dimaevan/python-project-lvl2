@@ -8,6 +8,7 @@ from .parser.parsing import parser_dict
 from .formatter.stylish_format import stylish
 from .formatter.plain_format import plain
 from .formatter.json_format import fjson
+from gen_diff.utils.functions import walker
 
 
 class MyError(Exception):
@@ -43,9 +44,9 @@ def main():
 def open_file(file):
     ext = str(file).split('.')[-1]
     if ext == 'json':
-        return json.load(open(file))
+        return walker(json.load(open(file)))
     elif ext in ("yaml", "yml"):
-        return yaml.safe_load(open(file))
+        return walker(yaml.safe_load(open(file)))
     raise MyError("Wrong type of files")
 
 
