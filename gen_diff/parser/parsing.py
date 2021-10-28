@@ -51,10 +51,11 @@ if __name__ == "__main__":
     # from pprint import pprint
     # from gen_diff.main import open_file
     # from gen_diff.formatter.plain_format import plain
+    # from gen_diff.formatter.stylish_format import stylish
     # file1 = open_file(
-    #           "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file10.json")
+    #           "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/complicated/file3.json")
     # file2 = open_file(
-    #          "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file11.json")
+    #          "/home/dimaevan/Projects/Python/python-project-lvl2/tests/fixtures/complicated/file4.json")
     # answer = parser_dict(file1, file2)
     # pprint(answer)
-    # print(plain(answer))
+    # print(stylish(answer))
