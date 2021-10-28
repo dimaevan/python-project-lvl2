@@ -1,6 +1,6 @@
-from gendiff.generate_diff import generate_diff, open_file
+from gen_diff.main import generate_diff, open_file
 from .fixtures.fixtures import *
-from gendiff.utils.functions import is_dict, is_have_stat, return_status
+from gen_diff.utils.functions import is_dict, is_have_stat, return_status
 
 
 def testing_json():

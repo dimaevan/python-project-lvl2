@@ -4,8 +4,10 @@ run-help:
 	@poetry run gendiff -h
 install:
 	@poetry install
+package-install:
+	python -m pip install  dist/*.whl --force-reinstall
 lint:
-	@poetry run flake8 gendiff
+	@poetry run flake8 gen_diff
 build:
 	@poetry build
 test:

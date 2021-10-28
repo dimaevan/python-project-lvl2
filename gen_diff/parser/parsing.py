@@ -48,7 +48,7 @@ def convert(obj):
 
 if __name__ == "__main__":
     pass
-    # from gendiff.scripts.main import open_files
+    # from gen_diff.scripts.main import open_files
 
     # file1, file2 = \
     #     open_files(

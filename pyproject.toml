@@ -4,11 +4,11 @@ version = "0.2.0"
 description = "Find differences from 2  json or yaml files. "
 authors = ["dimaevan <dimaevan@gmail.com>"]
 packages = [
-    { include='gendiff' },
+    { include='gen_diff' },
 ]
 
 [tool.poetry.scripts]
-gendiff = "gendiff.generate_diff:main"
+gendiff = "gen_diff.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
