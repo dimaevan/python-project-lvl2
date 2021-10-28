@@ -49,10 +49,10 @@ def convert(obj):
 
 if __name__ == "__main__":
     pass
-    from pprint import pprint
-    from gen_diff.main import open_file
-    file1 = open_file(
-              "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file10.yml")
-    file2 = open_file(
-             "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file11.yml")
-    pprint(parser_dict(file1, file2))
+    # from pprint import pprint
+    # from gen_diff.main import open_file
+    # file1 = open_file(
+    #           "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file10.yml")
+    # file2 = open_file(
+    #          "/home/dimaevan/Study/Python/python-project-lvl2/tests/fixtures/hexlet_fixtures/file11.yml")
+    # pprint(parser_dict(file1, file2))
