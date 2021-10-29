@@ -1,4 +1,4 @@
-from gen_diff.main import generate_diff, open_file
+from gen_diff.main import generate_diff
 
 with open('tests/fixtures/simple/out.txt') as file:
     result = file.read()
@@ -28,4 +28,3 @@ def test_complicated_dict_yaml():
     file1 = 'tests/fixtures/complicated/file3.yaml'
     file2 = 'tests/fixtures/complicated/file4.yaml'
     assert generate_diff(file1, file2, ) == result_big
-

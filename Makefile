@@ -7,7 +7,7 @@ install:
 package-install:
 	python -m pip install  dist/*.whl --force-reinstall
 lint:
-	@poetry run flake8 gen_diff
+	@poetry run flake8
 build:
 	@poetry build
 test:

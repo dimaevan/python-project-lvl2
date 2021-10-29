@@ -29,14 +29,13 @@ def main():
     first_file = os.path.join(os.getcwd(), args.first_file)
     second_file = os.path.join(os.getcwd(), args.second_file)
 
-
     # Выбор форматирования
     if args.format == 'plain':
-        print(generate_diff(first_file, second_file , 'plain'))
+        print(generate_diff(first_file, second_file, 'plain'))
     elif args.format == 'json':
-        print(generate_diff(first_file, second_file , 'json'))
+        print(generate_diff(first_file, second_file, 'json'))
     else:
-        print(generate_diff(first_file, second_file ))
+        print(generate_diff(first_file, second_file))
 
 
 def open_file(file):

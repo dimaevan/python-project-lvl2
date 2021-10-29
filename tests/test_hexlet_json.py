@@ -16,4 +16,3 @@ def test_json_plain():
     with open("tests/hexlet_fixtures/result_plain", "r") as file:
         result = file.read()
     assert generate_diff(file1, file2, 'plain') == result
-
