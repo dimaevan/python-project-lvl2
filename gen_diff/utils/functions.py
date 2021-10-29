@@ -45,6 +45,12 @@ def convert(obj):
         'False': 'false',
         'True': 'true',
         'None': 'null',
-        '': ''
     }
     return dictionary.get(str(obj), obj)
+
+
+def check_child(el):
+    x = str(el)
+    if len(x) > 0:
+        return ' ' + x
+    return ''

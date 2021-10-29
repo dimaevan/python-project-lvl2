@@ -18,14 +18,14 @@ def testing_yaml():
     assert generate_diff(file1, file2) == result
 
 
-# def test_complicated_dict_json():
-#     file1 = 'tests/fixtures/complicated/file3.json'
-#     file2 = 'tests/fixtures/complicated/file4.json'
-#     assert generate_diff(file1, file2) == result_big
-#
-#
-# def test_complicated_dict_yaml():
-#     file1 = 'tests/fixtures/complicated/file3.yaml'
-#     file2 = 'tests/fixtures/complicated/file4.yaml'
-#     assert generate_diff(file1, file2, ) == result_big
-#
+def test_complicated_dict_json():
+    file1 = 'tests/fixtures/complicated/file3.json'
+    file2 = 'tests/fixtures/complicated/file4.json'
+    assert generate_diff(file1, file2) == result_big
+
+
+def test_complicated_dict_yaml():
+    file1 = 'tests/fixtures/complicated/file3.yaml'
+    file2 = 'tests/fixtures/complicated/file4.yaml'
+    assert generate_diff(file1, file2, ) == result_big
+

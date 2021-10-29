@@ -1,4 +1,4 @@
-from gen_diff.utils.functions import is_have_stat
+from gen_diff.utils.functions import is_have_stat, check_child
 
 
 def stylish(struct):
@@ -11,9 +11,8 @@ def stylish(struct):
         space = spacing * size
         size += 1
         line = "{"
-        keys = element.keys()
 
-        for key in keys:
+        for key in element.keys():
             el = element[key]
             # Проверяем обьект или обычный словарь
             if is_have_stat(el):
@@ -34,4 +33,5 @@ def stylish(struct):
         return line
 
     result += inner(struct, 1)
-    return result
+    return result.rstrip()
+

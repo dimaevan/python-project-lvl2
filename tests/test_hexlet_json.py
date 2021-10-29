@@ -6,6 +6,7 @@ def test_json_stylish():
     file2 = 'tests/hexlet_fixtures/file11.json'
     with open("tests/hexlet_fixtures/result_stylish", "r") as file:
         result = file.read()
+    assert generate_diff(file1, file2) == result
     assert generate_diff(file1, file2, 'stylish') == result
 
 
