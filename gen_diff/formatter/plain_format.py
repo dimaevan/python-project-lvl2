@@ -1,15 +1,12 @@
-from ..utils.functions import return_status, check_type, is_dict
+from gen_diff.utils.functions import return_status, check_type, is_dict
 
-result = ''
 STATUSES = ('- ', '+ ', 'diff')
 
 
 def plain(element, parent=''):
-    global result
-
     if not is_dict(element):
         return
-
+    result = ''
     pr = ''
     if parent:
         pr = parent + '.'
@@ -22,10 +19,10 @@ def plain(element, parent=''):
 
         if status in STATUSES:
             result += first_string + answer(status, el)
-
         else:
-            plain(el['children'], parent=pr + key)
-
+            res = plain(el['children'], parent=pr + key)
+            if type(res) is str:
+                result += res + '\n'
     return result.rstrip()
 
 

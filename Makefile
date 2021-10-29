@@ -25,8 +25,8 @@ run4:
 run5:
 	@poetry run gendiff tests/hexlet_fixtures/file10.json tests/hexlet_fixtures/file11.json
 run6:
-	@poetry run gendiff ttests/hexlet_fixtures/file10.json tests/hexlet_fixtures/file11.json
+	@poetry run gendiff -f plain tests/hexlet_fixtures/file10.json tests/hexlet_fixtures/file11.json
 run7:
 	@poetry run gendiff tests/hexlet_fixtures/file10.yml tests/hexlet_fixtures/file11.yml
 run8:
-	@poetry run gendiff tests/hexlet_fixtures/file10.yml tests/hexlet_fixtures/file11.yml
+	@poetry run gendiff -f plain tests/hexlet_fixtures/file10.yml tests/hexlet_fixtures/file11.yml

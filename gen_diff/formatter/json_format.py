@@ -1,4 +1,4 @@
-from ..utils.functions import is_dict, is_have_stat
+from gen_diff.utils.functions import is_dict, is_have_stat
 import json
 
 

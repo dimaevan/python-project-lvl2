@@ -1,4 +1,4 @@
-from gen_diff.utils.functions import is_have_stat, check_child
+from gen_diff.utils.functions import is_have_stat
 
 
 def stylish(struct):
@@ -34,4 +34,3 @@ def stylish(struct):
 
     result += inner(struct, 1)
     return result.rstrip()
-
